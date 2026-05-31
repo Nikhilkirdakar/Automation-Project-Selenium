@@ -17,8 +17,8 @@ pipeline {
             sh '''python3 -m pip install --upgrade pip
 pip install -r requirements.txt'''
           } else {
-            bat """python -m pip install --upgrade pip
-pip install -r requirements.txt"""
+          bat """py -3 -m pip install --upgrade pip
+py -3 -m pip install -r requirements.txt"""
           }
         }
       }
@@ -29,7 +29,7 @@ pip install -r requirements.txt"""
           if (isUnix()) {
             sh 'python3 -m pytest -q --headless --browser_name=chrome --junitxml=Reports/results.xml'
           } else {
-            bat 'python -m pytest -q --headless --browser_name=chrome --junitxml=Reports/results.xml'
+            bat 'py -3 -m pytest -q --headless --browser_name=chrome --junitxml=Reports/results.xml'
           }
         }
       }

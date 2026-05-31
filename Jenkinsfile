@@ -1,5 +1,4 @@
-﻿#!groovy
-pipeline {
+﻿pipeline {
   agent any
   triggers { cron('H 6 * * *') }
   environment {
@@ -85,3 +84,4 @@ pipeline {
     }
   }
 }
+

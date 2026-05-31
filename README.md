@@ -1,4 +1,4 @@
-# PythonSelenium - Commerce
+﻿# PythonSelenium - Commerce
 
 This repository contains pytest-based Selenium tests for the Sauce Demo sample site.
 
@@ -39,4 +39,15 @@ export GIT_REPO="https://github.com/Nikhilkirdakar/Automation-Project-Selenium.g
 ./scripts/jenkins_create_job.sh
 
 The helper script uses the Jenkins REST API and requires curl and Python to be available. Store credentials securely (e.g. as Jenkins credentials) when configuring automated creation.
+
+
+Notifications
+
+- Jenkins: set SLACK_WEBHOOK (Incoming Webhook URL) and/or EMAIL_RECIPIENTS environment variables in the job or global Jenkins credentials. The pipeline will send a Slack message and email after each run.
+
+Releases
+
+- To create a release tag locally and push to GitHub:
+  git tag -a v1.1.0 -m "Release v1.1.0"
+  git push origin v1.1.0
 

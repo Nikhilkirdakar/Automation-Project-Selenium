@@ -1,4 +1,4 @@
-name: Python Selenium Tests
+﻿name: Python Selenium Tests
 
 on:
   push:
@@ -12,22 +12,22 @@ jobs:
     strategy:
       matrix:
         python-version: [ '3.10', '3.11' ]
+        browser: [ 'chrome', 'firefox' ]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run tests
-        run: pytest -q --headless --browser_name=chrome
+        run: |
+          pytest -q --headless --browser_name=${{ matrix.browser }} --junitxml=Reports/results-${{ matrix.browser }}.xml --html=Reports/report-${{ matrix.browser }}.html --self-contained-html
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.browser }}
+          path: Reports/

@@ -1,7 +1,7 @@
 import pytest
 
 from Utilities.utiliy import get_login_data
-from Page_Object.Login_Page import LoginPage
+from Pages.login_page import LoginPage
 
 
 @pytest.mark.parametrize(

@@ -2,3 +2,6 @@
 webdriver-manager
 pytest
 pytest-html
+allure-pytest
+pytest-xdist
+loguru

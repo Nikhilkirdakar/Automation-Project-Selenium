@@ -34,6 +34,18 @@ py -3 -m pip install -r requirements.txt"""
         }
       }
     }
+    stage('Publish HTML Report') {
+      steps {
+        publishHTML([
+          reportDir: 'Reports',
+          reportFiles: 'report.html',
+          reportName: 'Automation HTML Report',
+          keepAll: true,
+          alwaysLinkToLastBuild: true,
+          allowMissing: true
+        ])
+      }
+    }
     stage('Publish results') {
       steps {
         junit 'Reports/results.xml'
@@ -43,6 +55,8 @@ py -3 -m pip install -r requirements.txt"""
   }
   post {
     always {
+      junit 'Reports/results.xml'
+      archiveArtifacts artifacts: 'Reports/**, Screenshots/**', allowEmptyArchive: true
       echo 'Pipeline completed'
     }
   }

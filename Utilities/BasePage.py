@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 
 
 class BasePage:
@@ -10,6 +11,7 @@ class BasePage:
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-        path = f"Screenshots/{step}_{timestamp}.png"
+        os.makedirs("Screenshots", exist_ok=True)
+        path = os.path.join("Screenshots", f"{step}_{timestamp}.png")
 
         self.driver.save_screenshot(path)

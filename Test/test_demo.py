@@ -15,7 +15,10 @@ def test_purchase_product(browserInstance):
 
     # Open & Close Menu
     driver.find_element(By.ID, "react-burger-menu-btn").click()
-    driver.find_element(By.ID, "react-burger-cross-btn").click()
+    # Wait until the close button is clickable (avoid click interception)
+    WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.ID, "react-burger-cross-btn"))
+    ).click()
 
     # Add Sauce Labs Backpack to Cart
     products = driver.find_elements(By.CLASS_NAME, "inventory_item")

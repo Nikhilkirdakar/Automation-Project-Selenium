@@ -20,3 +20,23 @@ Notes
 
 - Tests use webdriver-manager to automatically download browser drivers.
 - CI is provided in .github/workflows to run tests on push/PR.
+
+Jenkins
+
+This repository includes a Jenkinsfile to run tests on a schedule. The pipeline is configured to run once every morning (cron: H 6 * * *).
+
+To create a Jenkins Pipeline job pointing to this repository, either:
+
+1) Manually: Create a new Pipeline job in Jenkins, set Pipeline script from SCM -> Git -> Repository URL, and set Script Path to Jenkinsfile. Configure Build Triggers -> Build periodically with the desired cron.
+
+2) Automatically: Use the provided helper script scripts/jenkins_create_job.sh. Example usage:
+
+export JENKINS_URL="https://jenkins.example.com"
+export JENKINS_USER="admin"
+export JENKINS_TOKEN="<api-token>"
+export JOB_NAME="python-selenium-daily"
+export GIT_REPO="https://github.com/Nikhilkirdakar/Automation-Project-Selenium.git"
+./scripts/jenkins_create_job.sh
+
+The helper script uses the Jenkins REST API and requires curl and Python to be available. Store credentials securely (e.g. as Jenkins credentials) when configuring automated creation.
+

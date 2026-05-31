@@ -1,4 +1,4 @@
-﻿pipeline {
+pipeline {
   agent any
   triggers {
     // Run once every morning at ~6:00 (use H for stable hashing)

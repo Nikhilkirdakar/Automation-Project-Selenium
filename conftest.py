@@ -1,4 +1,6 @@
-﻿import pytest
+import os
+import pytest
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -67,3 +69,22 @@ def browserInstance(request):
     yield driver
 
     driver.quit()
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item):
+    """Hook to take a screenshot on test failure and save to Screenshots/ with timestamp."""
+    outcome = yield
+    rep = outcome.get_result()
+
+    if rep.when == 'call' and rep.failed:
+        try:
+            driver = item.funcargs.get('browserInstance')
+            if driver:
+                os.makedirs('Screenshots', exist_ok=True)
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                filename = os.path.join('Screenshots', f"{item.name}_{timestamp}.png")
+                driver.save_screenshot(filename)
+        except Exception:
+            # avoid crashing the test hook
+            pass
